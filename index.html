@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="af">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinkel en Koljander Mark Etes</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <h1>Vinkel en Koljander Mark Etes</h1>
+            </div>
+            <div class="cart-icon" id="cart-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Ondersteun Ons Gemeente</h2>
+                <p>Bestel u heerlike aandetes vooruit vir die week van 26 - 29 Mei. Vars, smaaklik en gerieflik!</p>
+                <a href="#menu" class="btn btn-primary">Kyk Spyskaart</a>
+            </div>
+        </section>
+
+        <section id="menu" class="menu-section">
+            <div class="container">
+                <h2 class="section-title">Beskikbare Etes</h2>
+                <div id="loading-message" style="text-align:center; padding: 50px; font-size: 1.2rem; color: var(--primary-color);">Besig om vandag se spyskaart en pryse te laai...</div>
+                <div class="products-grid" id="products-grid" style="display: none;">
+                    <!-- Products will be injected here by JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Shopping Cart Overlay -->
+    <div class="cart-overlay" id="cart-overlay">
+        <div class="cart-modal">
+            <div class="cart-header">
+                <h2>U Bestelling</h2>
+                <button class="close-cart" id="close-cart">&times;</button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items injected here -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Totaal:</span>
+                    <span id="cart-total-price">R0.00</span>
+                </div>
+                <button class="btn btn-primary btn-block" id="checkout-btn">Gaan na Betaalpunt</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-overlay" id="checkout-overlay">
+        <div class="checkout-modal">
+            <div class="checkout-header">
+                <h2>Voltooi Bestelling</h2>
+                <button class="close-checkout" id="close-checkout">&times;</button>
+            </div>
+            <form id="checkout-form" class="checkout-form">
+                <div class="form-group">
+                    <label for="name">Naam en Van</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-posadres</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Selfoonnommer</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Ekstra Notas (Bv. Allergieë)</label>
+                    <textarea id="notes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Plaas Bestelling</button>
+            </form>
+            <div id="order-success" class="order-success hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#00879e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <h3>Baie Dankie!</h3>
+                <p>U bestelling is suksesvol geplaas.</p>
+                <p id="order-number-display" style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color); margin-bottom: 15px;"></p>
+                
+                <h4 style="margin: 20px 0 10px 0; color: #333;">Hoe wil u betaal?</h4>
+                
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ddd;">
+                    <h5 style="margin-top: 0; color: #00879e;">Opsie 1: SnapScan</h5>
+                    <img id="snapscan-qr" src="" alt="SnapScan QR Kode" style="max-width: 150px; margin: 10px auto; display: none;">
+                    <a id="snapscan-link" href="#" target="_blank" class="btn btn-primary btn-block" style="background-color: #0072CE; margin-top: 10px;">Betaal met SnapScan App</a>
+                </div>
+                
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ddd; text-align: left; font-size: 0.9rem;">
+                    <h5 style="margin-top: 0; color: #00879e; text-align: center;">Opsie 2: EFT</h5>
+                    <p style="margin: 5px 0;"><strong>Naam:</strong> Durbanville Bergsig</p>
+                    <p style="margin: 5px 0;"><strong>Bank:</strong> ABSA Durbanville</p>
+                    <p style="margin: 5px 0;"><strong>Tak kode:</strong> 334810</p>
+                    <p style="margin: 5px 0;"><strong>Tipe Rekening:</strong> Tjek</p>
+                    <p style="margin: 5px 0;"><strong>Rekening nommer:</strong> 1410590154</p>
+                    <p style="margin: 5px 0; font-size: 1rem; color: #865d25;"><strong>Verwysing:</strong> <span id="eft-reference" style="font-weight: bold;"></span></p>
+                </div>
+
+                <button class="btn btn-secondary btn-block" id="close-success-btn">Maak Toe</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2026 Bergsig DV. Alle regte voorbehou.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="products.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
