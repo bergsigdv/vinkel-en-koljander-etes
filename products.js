@@ -36,7 +36,7 @@ const products = [
         date: "Vrydag 29 Mei",
         name: "Kids Meal: Chicken Strips & Chips",
         price: 90,
-        image: "https://images.unsplash.com/photo-1562967914-608f82629710?q=80&w=800&auto=format&fit=crop",
+        image: "images/pic1.jpg",
         description: "Bros hoenderrepies en skyfies, spesiaal vir die kinders."
     },
     {
@@ -44,7 +44,7 @@ const products = [
         date: "Dinsdag 26 Mei",
         name: "Gebakte poeding: Malva (26 Mei)",
         price: 35,
-        image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop",
+        image: "images/pic4.jpg",
         description: "Tradisionele, klewerige Malvapoeding gebak tot perfeksie."
     },
     {
@@ -52,7 +52,7 @@ const products = [
         date: "Woensdag 27 Mei",
         name: "Gebakte poeding: Sjokolade (27 Mei)",
         price: 35,
-        image: "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?q=80&w=800&auto=format&fit=crop",
+        image: "images/pic3.jpg",
         description: "Ryk en dekadente sjokolade poeding, 'n gunsteling vir almal."
     },
     {
@@ -60,7 +60,7 @@ const products = [
         date: "Donderdag 28 Mei",
         name: "Gebakte poeding: Potpoeding (28 Mei)",
         price: 35,
-        image: "https://images.unsplash.com/photo-1605333555543-7f2cb26ce407?q=80&w=800&auto=format&fit=crop",
+        image: "images/pic2.jpg",
         description: "Ouma se smullekker outydse potpoeding bedien met sous."
     },
     {
@@ -68,7 +68,7 @@ const products = [
         date: "Vrydag 29 Mei",
         name: "Gebakte poeding: Malva (29 Mei)",
         price: 35,
-        image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop",
+        image: "images/pic4.jpg",
         description: "Tradisionele, klewerige Malvapoeding gebak tot perfeksie, beskikbaar op Vrydag."
     }
 ];
