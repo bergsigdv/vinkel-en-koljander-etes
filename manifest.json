@@ -1,0 +1,17 @@
+{
+  "name": "Vinkel en Koljander Mark",
+  "short_name": "Vinkel & Koljander",
+  "description": "Bestel heerlike tuisgemaakte etes vooruit.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f6f6f6",
+  "theme_color": "#00879e",
+  "icons": [
+    {
+      "src": "images/app-icon.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
