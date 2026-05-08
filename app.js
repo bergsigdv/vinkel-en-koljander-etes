@@ -183,30 +183,63 @@ function setupEventListeners() {
         
         dynamicProducts.sort((a, b) => a.order - b.order);
         
-        // Vul dropdowns in as data bestaan
-        if (sheetData.tye && sheetData.tye.length > 0) {
-            const pickupSelect = document.getElementById('pickup-time');
-            if (pickupSelect) {
-                pickupSelect.innerHTML = '<option value="">-- Kies n tyd --</option>';
-                sheetData.tye.forEach(tyd => {
-                    const opt = document.createElement('option');
-                    opt.value = tyd;
-                    opt.textContent = tyd;
-                    pickupSelect.appendChild(opt);
+        // Populeer die Tye opsies as radio buttons
+        const pickupContainer = document.getElementById('pickup-time-container');
+        if (pickupContainer) {
+            pickupContainer.innerHTML = '';
+            if (sheetData.tye && sheetData.tye.length > 0) {
+                sheetData.tye.forEach((tyd, index) => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'radio-item';
+                    
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = 'pickup-time';
+                    input.value = tyd;
+                    input.id = 'pickup-time-' + index;
+                    input.required = true;
+                    if (index === 0) input.checked = true;
+                    
+                    const label = document.createElement('label');
+                    label.htmlFor = 'pickup-time-' + index;
+                    label.textContent = tyd;
+                    
+                    wrapper.appendChild(input);
+                    wrapper.appendChild(label);
+                    pickupContainer.appendChild(wrapper);
                 });
+            } else {
+                pickupContainer.innerHTML = '<p style="color: #666; font-size: 0.9em; margin: 0;">Geen afhaaltye beskikbaar nie.</p>';
             }
         }
         
-        if (sheetData.betaalOpsies && sheetData.betaalOpsies.length > 0) {
-            const paySelect = document.getElementById('payment-option');
-            if (paySelect) {
-                paySelect.innerHTML = '<option value="">-- Kies n opsie --</option>';
-                sheetData.betaalOpsies.forEach(opsie => {
-                    const opt = document.createElement('option');
-                    opt.value = opsie;
-                    opt.textContent = opsie;
-                    paySelect.appendChild(opt);
+        // Populeer die Betaal opsies as radio buttons
+        const paymentContainer = document.getElementById('payment-option-container');
+        if (paymentContainer) {
+            paymentContainer.innerHTML = '';
+            if (sheetData.betaalOpsies && sheetData.betaalOpsies.length > 0) {
+                sheetData.betaalOpsies.forEach((opsie, index) => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'radio-item';
+                    
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = 'payment-option';
+                    input.value = opsie;
+                    input.id = 'payment-option-' + index;
+                    input.required = true;
+                    if (index === 0) input.checked = true;
+                    
+                    const label = document.createElement('label');
+                    label.htmlFor = 'payment-option-' + index;
+                    label.textContent = opsie;
+                    
+                    wrapper.appendChild(input);
+                    wrapper.appendChild(label);
+                    paymentContainer.appendChild(wrapper);
                 });
+            } else {
+                paymentContainer.innerHTML = '<p style="color: #666; font-size: 0.9em; margin: 0;">Geen betaalopsies beskikbaar nie.</p>';
             }
         }
         
