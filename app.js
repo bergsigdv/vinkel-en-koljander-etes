@@ -162,6 +162,18 @@ function setupEventListeners() {
         const productsObj = sheetData.products || sheetData;
         window.orderPrefix = sheetData.prefix || "OppihoekB"; // Save the prefix with a fallback
         
+        const fallbackImages = {
+            "Bobotie & Rys": "images/bobotie.png",
+            "Gebakte poeding: Malva": "images/malva.png",
+            "Lasagne": "images/lasagna.jpg",
+            "Gebakte poeding: Sjokolade": "images/sjokolade.png",
+            "Butter Chicken & Rys": "images/butter_chicken.png",
+            "Gebakte poeding: Potpoeding": "images/pot.png",
+            "Burger & Chips": "images/burger.jpg",
+            "Kids Meal: Chicken Strips & Chips": "images/chickenstrips.jpg",
+            "Vetkoek & Mince": "images/vetkoek.png"
+        };
+        
         for (const [name, info] of Object.entries(productsObj)) {
             if (!nameToId[name]) {
                 nameToId[name] = nextId++;
@@ -169,13 +181,18 @@ function setupEventListeners() {
             window.nameToIdMap = nameToId;
             window.nextId = nextId;
             
+            let finalImage = info.image;
+            if (!finalImage || finalImage.trim() === "") {
+                finalImage = fallbackImages[name] || "images/logo.png";
+            }
+            
             dynamicProducts.push({
                 id: nameToId[name],
                 name: name,
                 description: info.description || "Heerlike bederf van Bergsig DV.",
                 date: info.date || "",
                 price: parseFloat(info.price) || 0,
-                image: info.image || "https://via.placeholder.com/400x300?text=Heerlike+Ete",
+                image: finalImage,
                 stock: parseInt(info.stock) || 0,
                 order: info.order !== undefined ? info.order : 99
             });
