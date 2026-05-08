@@ -191,7 +191,7 @@ function setupEventListeners() {
             dynamicProducts.push({
                 id: nameToId[key],
                 name: actualName,
-                description: info.description || "Heerlike bederf van Bergsig DV.",
+                description: info.description || "",
                 date: info.date || "",
                 price: parseFloat(info.price) || 0,
                 image: finalImage,
