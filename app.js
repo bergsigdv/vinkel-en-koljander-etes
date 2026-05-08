@@ -174,21 +174,23 @@ function setupEventListeners() {
             "Vetkoek & Mince": "images/vetkoek.png"
         };
         
-        for (const [name, info] of Object.entries(productsObj)) {
-            if (!nameToId[name]) {
-                nameToId[name] = nextId++;
+        for (const [key, info] of Object.entries(productsObj)) {
+            let actualName = info.realName || key;
+            
+            if (!nameToId[key]) {
+                nameToId[key] = nextId++;
             }
             window.nameToIdMap = nameToId;
             window.nextId = nextId;
             
             let finalImage = info.image;
             if (!finalImage || finalImage.trim() === "") {
-                finalImage = fallbackImages[name] || "images/logo.png";
+                finalImage = fallbackImages[actualName] || "images/logo.png";
             }
             
             dynamicProducts.push({
-                id: nameToId[name],
-                name: name,
+                id: nameToId[key],
+                name: actualName,
                 description: info.description || "Heerlike bederf van Bergsig DV.",
                 date: info.date || "",
                 price: parseFloat(info.price) || 0,
