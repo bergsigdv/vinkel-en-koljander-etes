@@ -162,18 +162,6 @@ function setupEventListeners() {
         const productsObj = sheetData.products || sheetData;
         window.orderPrefix = sheetData.prefix || "OppihoekB"; // Save the prefix with a fallback
         
-        const fallbackImages = {
-            "Bobotie & Rys": "images/bobotie.png",
-            "Gebakte poeding: Malva": "images/malva.png",
-            "Lasagne": "images/lasagna.jpg",
-            "Gebakte poeding: Sjokolade": "images/sjokolade.png",
-            "Butter Chicken & Rys": "images/butter_chicken.png",
-            "Gebakte poeding: Potpoeding": "images/pot.png",
-            "Burger & Chips": "images/burger.jpg",
-            "Kids Meal: Chicken Strips & Chips": "images/chickenstrips.jpg",
-            "Vetkoek & Mince": "images/vetkoek.png"
-        };
-        
         for (const [key, info] of Object.entries(productsObj)) {
             let actualName = info.realName || key;
             
@@ -185,7 +173,17 @@ function setupEventListeners() {
             
             let finalImage = info.image;
             if (!finalImage || finalImage.trim() === "") {
-                finalImage = fallbackImages[actualName] || "images/logo.png";
+                const sName = actualName.toLowerCase();
+                if (sName.includes("bobotie")) finalImage = "images/bobotie.png";
+                else if (sName.includes("malva")) finalImage = "images/malva.png";
+                else if (sName.includes("lasagne")) finalImage = "images/lasagna.jpg";
+                else if (sName.includes("sjokolade")) finalImage = "images/sjokolade.png";
+                else if (sName.includes("butter chicken")) finalImage = "images/butter_chicken.png";
+                else if (sName.includes("potpoeding") || sName.includes("pot poeding")) finalImage = "images/pot.png";
+                else if (sName.includes("burger")) finalImage = "images/burger.jpg";
+                else if (sName.includes("chicken strips") || sName.includes("kids meal")) finalImage = "images/chickenstrips.jpg";
+                else if (sName.includes("vetkoek")) finalImage = "images/vetkoek.png";
+                else finalImage = "images/logo.png";
             }
             
             dynamicProducts.push({
