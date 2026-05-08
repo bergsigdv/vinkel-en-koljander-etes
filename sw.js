@@ -1,11 +1,9 @@
-const CACHE_NAME = 'vinkel-mark-v1';
+const CACHE_NAME = 'vinkel-mark-v3';
 const urlsToCache = [
   './',
   './index.html',
   './styles.css',
-  './app.js',
-  './products.js',
-  './images/app-icon.png'
+  './app.js'
 ];
 
 self.addEventListener('install', event => {
@@ -14,6 +12,20 @@ self.addEventListener('install', event => {
       .then(cache => {
         return cache.addAll(urlsToCache);
       })
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
 });
 

@@ -145,7 +145,7 @@ function setupEventListeners() {
     });
 
     // Vul asseblief hierdie skakel in na die Apps Script Web App ontplooi is:
-    const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzllFxYZmZ0Br0pmxnm3kLe8fey-imEJ9yZMmRKaE2bLxrkBQaqDj6fsYD174jCVEW1/exec";
+    const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwO8p4qAQIuZyeDBq4M5Vb7bYawVJ2MJ8dKZ6SNXJKYDj6ChF3ZQtd0CwocXA3lTeU/exec";
 
     // Haal voorraad op met JSONP
     window.updateStockUI = function(sheetData) {
@@ -198,7 +198,6 @@ function setupEventListeners() {
                     input.value = tyd;
                     input.id = 'pickup-time-' + index;
                     input.required = true;
-                    if (index === 0) input.checked = true;
                     
                     const label = document.createElement('label');
                     label.htmlFor = 'pickup-time-' + index;
@@ -228,7 +227,6 @@ function setupEventListeners() {
                     input.value = opsie;
                     input.id = 'payment-option-' + index;
                     input.required = true;
-                    if (index === 0) input.checked = true;
                     
                     const label = document.createElement('label');
                     label.htmlFor = 'payment-option-' + index;
