@@ -173,17 +173,7 @@ function setupEventListeners() {
             
             let finalImage = info.image;
             if (!finalImage || finalImage.trim() === "") {
-                const sName = actualName.toLowerCase();
-                if (sName.includes("bobotie")) finalImage = "images/bobotie.png";
-                else if (sName.includes("malva")) finalImage = "images/malva.png";
-                else if (sName.includes("lasagne")) finalImage = "images/lasagna.jpg";
-                else if (sName.includes("sjokolade")) finalImage = "images/sjokolade.png";
-                else if (sName.includes("butter chicken")) finalImage = "images/butter_chicken.png";
-                else if (sName.includes("potpoeding") || sName.includes("pot poeding")) finalImage = "images/pot.png";
-                else if (sName.includes("burger")) finalImage = "images/burger.jpg";
-                else if (sName.includes("chicken strips") || sName.includes("kids meal")) finalImage = "images/chickenstrips.jpg";
-                else if (sName.includes("vetkoek")) finalImage = "images/vetkoek.png";
-                else finalImage = "images/logo.png";
+                finalImage = "images/logo.png";
             }
             
             dynamicProducts.push({
