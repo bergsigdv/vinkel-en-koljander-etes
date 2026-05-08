@@ -150,7 +150,8 @@ function setupEventListeners() {
     // Haal voorraad op met JSONP
     window.updateStockUI = function(sheetData) {
         let dynamicProducts = [];
-        let index = 1;
+        let nameToId = window.nameToIdMap || {};
+        let nextId = window.nextId || 1;
         
         // As daar 'n fout is
         if (sheetData.error) {
@@ -158,22 +159,58 @@ function setupEventListeners() {
             return;
         }
         
-        for (const [name, info] of Object.entries(sheetData)) {
-            // Soek of die produk reeds in products.js bestaan vir prentjies
-            const existingProduct = products.find(p => p.name === name);
+        const productsObj = sheetData.products || sheetData;
+        window.orderPrefix = sheetData.prefix || "OppihoekB"; // Save the prefix with a fallback
+        
+        for (const [name, info] of Object.entries(productsObj)) {
+            if (!nameToId[name]) {
+                nameToId[name] = nextId++;
+            }
+            window.nameToIdMap = nameToId;
+            window.nextId = nextId;
             
             dynamicProducts.push({
-                id: existingProduct ? existingProduct.id : index++,
+                id: nameToId[name],
                 name: name,
-                description: existingProduct ? existingProduct.description : "Heerlike bederf van Bergsig DV.",
-                date: existingProduct ? existingProduct.date : "",
-                price: info.price,
-                image: existingProduct ? existingProduct.image : "https://via.placeholder.com/400x300?text=Heerlike+Ete",
-                stock: info.stock // Stoor voorraad
+                description: info.description || "Heerlike bederf van Bergsig DV.",
+                date: info.date || "",
+                price: parseFloat(info.price) || 0,
+                image: info.image || "https://via.placeholder.com/400x300?text=Heerlike+Ete",
+                stock: parseInt(info.stock) || 0,
+                order: info.order !== undefined ? info.order : 99
             });
         }
         
-        // Teken slegs die beskikbare produkte met hul nuwe pryse in die volgorde van die Google Sheet
+        dynamicProducts.sort((a, b) => a.order - b.order);
+        
+        // Vul dropdowns in as data bestaan
+        if (sheetData.tye && sheetData.tye.length > 0) {
+            const pickupSelect = document.getElementById('pickup-time');
+            if (pickupSelect) {
+                pickupSelect.innerHTML = '<option value="">-- Kies n tyd --</option>';
+                sheetData.tye.forEach(tyd => {
+                    const opt = document.createElement('option');
+                    opt.value = tyd;
+                    opt.textContent = tyd;
+                    pickupSelect.appendChild(opt);
+                });
+            }
+        }
+        
+        if (sheetData.betaalOpsies && sheetData.betaalOpsies.length > 0) {
+            const paySelect = document.getElementById('payment-option');
+            if (paySelect) {
+                paySelect.innerHTML = '<option value="">-- Kies n opsie --</option>';
+                sheetData.betaalOpsies.forEach(opsie => {
+                    const opt = document.createElement('option');
+                    opt.value = opsie;
+                    opt.textContent = opsie;
+                    paySelect.appendChild(opt);
+                });
+            }
+        }
+        
+        // Teken slegs die beskikbare produkte in die regte volgorde
         renderProducts(dynamicProducts);
         
         // Versteek die laai boodskap en wys die grid
@@ -287,8 +324,11 @@ function setupEventListeners() {
                 orderNumberDisplay.textContent = "Bestelnommer: " + orderNum;
             }
             
+            // Haal die prefix wat ons vroeër gestoor het
+            const prefix = window.orderPrefix || "OppihoekB";
+            
             // Update SnapScan link en QR Kode met ALS0527 en die bestelnommer
-            const snapscanUrl = `https://pos.snapscan.io/qr/ALS0527?id=Oppihoek${orderNum}&amount=${window.currentTotalCents}`;
+            const snapscanUrl = `https://pos.snapscan.io/qr/ALS0527?id=${prefix}${orderNum}&amount=${window.currentTotalCents}`;
             
             const snapscanLink = document.getElementById('snapscan-link');
             if (snapscanLink) {
@@ -305,7 +345,7 @@ function setupEventListeners() {
             // Dateer EFT verwysing op
             const eftRef = document.getElementById('eft-reference');
             if (eftRef) {
-                eftRef.textContent = "Oppihoek" + orderNum;
+                eftRef.textContent = prefix + orderNum;
             }
             
             // Hide form, show success
@@ -331,7 +371,9 @@ function setupEventListeners() {
         const totalCents = Math.round(totalPrice * 100);
         window.currentTotalCents = totalCents; // Stoor vir die callback
         
-        let summary = "";
+        const pickupTimeVal = document.querySelector('input[name="pickup-time"]:checked')?.value || '';
+        const paymentOptionVal = document.querySelector('input[name="payment-option"]:checked')?.value || '';
+        let summary = `Afhaaltyd: ${pickupTimeVal}\nBetaalopsie: ${paymentOptionVal}\n\n`;
         let itemsList = [];
         cart.forEach(item => {
             summary += `${item.quantity}x ${item.name} (${item.date})\n`;
@@ -357,6 +399,8 @@ function setupEventListeners() {
             email: document.getElementById('email').value,
             phone: document.getElementById('phone').value,
             notes: document.getElementById('notes').value,
+            pickupTime: pickupTimeVal,
+            paymentOption: paymentOptionVal,
             orderSummary: summary,
             items: itemsList,
             total: totalPrice

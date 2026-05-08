@@ -527,6 +527,35 @@ a:hover {
     box-shadow: 0 0 0 2px rgba(0,135,158,0.2);
 }
 
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 5px;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.radio-item input[type="radio"] {
+    width: auto;
+    margin: 0;
+    cursor: pointer;
+}
+
+.radio-item label {
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+}
+
 .hidden {
     display: none !important;
 }
