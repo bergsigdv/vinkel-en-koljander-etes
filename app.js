@@ -365,8 +365,8 @@ function setupEventListeners() {
             // Haal die prefix wat ons vroeër gestoor het
             const prefix = window.orderPrefix || "OppihoekB";
             
-            // Update SnapScan link en QR Kode met ALS0527 en die bestelnommer
-            const snapscanUrl = `https://pos.snapscan.io/qr/ALS0527?id=${prefix}${orderNum}&amount=${window.currentTotalCents}`;
+            // Update SnapScan link en QR Kode met JUqUDzJH en die bestelnommer
+            const snapscanUrl = `https://pos.snapscan.io/qr/JUqUDzJH?id=${prefix}${orderNum}&amount=${window.currentTotalCents}`;
             
             const snapscanLink = document.getElementById('snapscan-link');
             if (snapscanLink) {
